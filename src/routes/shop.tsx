@@ -5,10 +5,10 @@ import { ProductCard } from "@/components/ProductCard";
 import { categories, discount, products, type Category, type Gender } from "@/lib/products";
 
 type Search = {
-  category?: Category;
-  gender?: Gender;
-  sort?: "recommended" | "newest" | "price-asc" | "price-desc" | "rating" | "discount";
-  q?: string;
+  category?: Category | undefined;
+  gender?: Gender | undefined;
+  sort?: "recommended" | "newest" | "price-asc" | "price-desc" | "rating" | "discount" | undefined;
+  q?: string | undefined;
 };
 
 export const Route = createFileRoute("/shop")({
