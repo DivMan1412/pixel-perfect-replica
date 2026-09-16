@@ -70,9 +70,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
             (l) => l.slug === line.slug && l.size === line.size && l.color === line.color,
           );
           if (i === -1) return [...prev, line];
-          const next = [...prev];
-          next[i] = { ...next[i], qty: next[i].qty + line.qty };
-          return next;
+          return prev.map((l, idx) => (idx === i ? { ...l, qty: l.qty + line.qty } : l));
         }),
       remove: (index) => setLines((prev) => prev.filter((_, i) => i !== index)),
       setQty: (index, qty) =>
