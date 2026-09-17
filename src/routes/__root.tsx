@@ -11,6 +11,10 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { CartProvider } from "@/lib/cart";
+import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
+import { CartDrawer } from "@/components/CartDrawer";
 
 function NotFoundComponent() {
   return (
@@ -130,8 +134,23 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <CartProvider>
+        <SiteHeader />
+        <main>
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+        </main>
+        <SiteFooter />
+        <CartDrawer />
+        <a
+          href="https://wa.me/910000000000"
+          target="_blank"
+          rel="noreferrer"
+          className="fixed bottom-5 right-5 z-40 rounded-full bg-accent px-5 py-3 text-sm font-medium text-accent-foreground shadow-card"
+        >
+          WhatsApp us
+        </a>
+      </CartProvider>
     </QueryClientProvider>
   );
 }
