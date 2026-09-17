@@ -28,7 +28,14 @@ type CartState = {
 const FREE_SHIPPING_THRESHOLD = 999;
 const SHIPPING_FEE = 79;
 
-const CartContext = createContext<CartState | null>(null);
+// Keep a single context instance even if this module is evaluated twice
+// (e.g. duplicated across build chunks), which would otherwise make
+// consumers read a different context than the provider writes to.
+const globalStore = globalThis as unknown as {
+  __ybCartContext?: React.Context<CartState | null>;
+};
+const CartContext =
+  globalStore.__ybCartContext ?? (globalStore.__ybCartContext = createContext<CartState | null>(null));
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [lines, setLines] = useState<CartLine[]>([]);
